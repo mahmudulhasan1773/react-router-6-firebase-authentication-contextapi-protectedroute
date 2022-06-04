@@ -1,0 +1,12 @@
+/
+1. step to use firebase
+2. creae a project on firebase
+3. install firebase
+4. register web app on firebase
+5. copy firebase config init  
+6. export default app
+7. import app firebase init.js into app.js
+8. import getAuth from from firebase/auth and create auth = getAuth(app)
+9. turn on google autentication
+10.
+
