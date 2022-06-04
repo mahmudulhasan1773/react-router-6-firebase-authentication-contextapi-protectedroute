@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import useFirebase from "../../hooks/useFirebase";
 import "./signIn.css";
 
 const SignIn = () => {
+  const { user, setuser, createSignIn } = useFirebase();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+
+    createSignIn(email, password);
+  };
   return (
     <div className="signIn">
-      <Form>
+      <Form onSubmit={handleSignIn}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" />
+          <Form.Control ref={emailRef} type="email" placeholder="Enter email" />
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
           </Form.Text>
@@ -17,11 +28,13 @@ const SignIn = () => {
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
+          <Form.Control
+            ref={passwordRef}
+            type="password"
+            placeholder="Password"
+          />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
+
         <Button variant="primary" type="submit">
           Sign In
         </Button>
