@@ -1,0 +1,8 @@
+.signIn{
+  width: 70%;
+  margin:50px auto;
+  border: 1px solid rgb(6, 4, 41);
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: green 1px 1px 12px 2px;
+}
