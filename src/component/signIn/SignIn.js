@@ -5,9 +5,11 @@ import useFirebase from "../../hooks/useFirebase";
 import "./signIn.css";
 
 const SignIn = () => {
-  const { user, setuser, createSignIn } = useFirebase();
+  const { user, setuser, createSignIn, signInWithGoogle } = useFirebase();
   const emailRef = useRef();
   const passwordRef = useRef();
+  //gogle
+
   const handleSignIn = (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
@@ -15,8 +17,13 @@ const SignIn = () => {
 
     createSignIn(email, password);
   };
+
   return (
     <div className="signIn">
+      <div onClick={signInWithGoogle} className="googleSingIn text-center">
+        {" "}
+        sign in with google{" "}
+      </div>
       <Form onSubmit={handleSignIn}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>

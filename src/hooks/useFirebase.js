@@ -1,22 +1,32 @@
 import firbaseConfigApp from "../firebase/firebase.config";
-
+import { useEffect, useState } from "react";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
-import { useState } from "react";
+const googleProvider = new GoogleAuthProvider();
 
 firbaseConfigApp();
 const auth = getAuth();
 
 const useFirebase = () => {
-  const [user, setuser] = useState("");
+  const [user, setUser] = useState("");
+
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, googleProvider)
+      .then((result) => setUser(result.user))
+      .then((error) => console.log(error));
+  };
 
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password)
       .then((res) => {
-        setuser(res.user);
+        setUser(res.user);
         console.log(res.user);
       })
       .catch((error) => console.log("from create user ", error));
@@ -32,11 +42,28 @@ const useFirebase = () => {
       });
   };
 
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      console.log(user);
+    });
+  }, []);
+
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        setUser({});
+      })
+      .catch();
+  };
+
   return {
+    handleSignOut,
     user,
-    setuser,
+    setUser,
     createUser,
     createSignIn,
+    signInWithGoogle,
   };
 };
 
